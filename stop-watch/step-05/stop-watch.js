@@ -1,6 +1,8 @@
 const stopWatchView = document.querySelector('#stop-watch-view');
 const toggleStopWatchButton = document.querySelector('#toggle-stop-watch');
 toggleStopWatchButton.addEventListener('click', toggleStopWatch);
+const resetButton = document.querySelector('#reset-stop-watch');
+resetButton.addEventListener('click', resetStopWatch);
 
 let hundredth = 0;
 let seconds = 0;
@@ -29,21 +31,37 @@ function handleTimeChange() {
   displayTime();
 }
 
+function startStopWatch(){
+intervalId = setInterval(handleTimeChange, 10);
+toggleStopWatchButton.innerHTML = 'Stop';
+}
+
+function stopStopWatch(){
+clearInterval(intervalId);
+    toggleStopWatchButton.innerHTML = 'Start';
+    intervalId = null;
+}
+
+
+
+
+
+
 let intervalId = null;
 function toggleStopWatch() {
   console.log('intervalId', intervalId);
   if (intervalId == null) {
-    //start the stop watch
-    intervalId = setInterval(handleTimeChange, 10);
-    //button is top
-    toggleStopWatchButton.innerHTML = 'Stop';
+      startStopWatch()
   } else {
-    //stop the stop watch
-    clearInterval(intervalId);
-    toggleStopWatchButton.innerHTML = 'Start';
-    intervalId = null;
+      stopStopWatch()
+    
   }
 }
 
-
+function resetStopWatch(){
+    hundredth = 0;
+    seconds = 0;
+    minutes = 0;
+    displayTime();
+}
 
